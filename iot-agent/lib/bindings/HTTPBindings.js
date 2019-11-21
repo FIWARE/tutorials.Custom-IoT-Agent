@@ -1,20 +1,20 @@
 /*
  * Copyright 2016 Telefonica Investigación y Desarrollo, S.A.U
  *
- * This file is part of iotagent-ul
+ * This file is part of iotagent-xml
  *
- * iotagent-ul is free software: you can redistribute it and/or
+ * iotagent-xml is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the License,
  * or (at your option) any later version.
  *
- * iotagent-ul is distributed in the hope that it will be useful,
+ * iotagent-xml is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public
- * License along with iotagent-ul.
+ * License along with iotagent-xml.
  * If not, seehttp://www.gnu.org/licenses/.
  *
  * For those usages not covered by the GNU Affero General Public License
@@ -35,12 +35,12 @@ var http = require('http'),
     constants = require('../constants'),
     commonBindings = require('./../commonBindings'),
     errors = require('../errors'),
-    ulParser = require('../ulParser'),
+    xmlParser = require('../xmlParser'),
     httpBindingServer,
     request = require('request'),
     config = require('../configService'),
     context = {
-        op: 'IOTAUL.HTTP.Binding'
+        op: 'IOTAXML.HTTP.Binding'
     },
     transport = 'HTTP';
 
@@ -72,7 +72,7 @@ function parseData(req, res, next) {
 
     try {
         if (payload) {
-            data = ulParser.parse(payload);
+            data = xmlParser.parse(payload);
         }
     } catch (e) {
         error = e;
@@ -179,7 +179,7 @@ function returnCommands(req, res, next) {
     }
 
     function parseCommand(item) {
-        return ulParser.createCommandPayload(req.device, item.name, item.value);
+        return xmlParser.createCommandPayload(req.device, item.name, item.value);
     }
 
     function concatCommand(previous, current) {
@@ -276,7 +276,7 @@ function generateCommandExecution(apiKey, device, attribute) {
     options = {
         url: device.endpoint,
         method: 'POST',
-        body: ulParser.createCommandPayload(device, cmdName, cmdAttributes),
+        body: xmlParser.createCommandPayload(device, cmdName, cmdAttributes),
         headers: {
             'fiware-service': device.service,
             'fiware-servicepath': device.subservice
@@ -297,7 +297,7 @@ function generateCommandExecution(apiKey, device, attribute) {
                 var errorMsg;
 
                 try {
-                    commandObj = ulParser.result(body);
+                    commandObj = xmlParser.result(body);
                     errorMsg = commandObj.result;
                 } catch (e) {
                     errorMsg = body;
@@ -306,7 +306,7 @@ function generateCommandExecution(apiKey, device, attribute) {
                 callback(new errors.HTTPCommandResponseError(response.statusCode, errorMsg, cmdName));
             } else {
                 if (apiKey) {
-                    commandObj = ulParser.result(body);
+                    commandObj = xmlParser.result(body);
 
                     process.nextTick(
                         utils.updateCommand.bind(

@@ -1,20 +1,20 @@
 /*
  * Copyright 2016 Telefonica Investigación y Desarrollo, S.A.U
  *
- * This file is part of iotagent-ul
+ * This file is part of iotagent-xml
  *
- * iotagent-ul is free software: you can redistribute it and/or
+ * iotagent-xml is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the License,
  * or (at your option) any later version.
  *
- * iotagent-ul is distributed in the hope that it will be useful,
+ * iotagent-xml is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public
- * License along with iotagent-ul.
+ * License along with iotagent-xml.
  * If not, seehttp://www.gnu.org/licenses/.
  *
  * For those usages not covered by the GNU Affero General Public License
@@ -32,10 +32,10 @@ var iotAgentLib = require('iotagent-node-lib'),
     _ = require('underscore'),
     utils = require('./iotaUtils'),
     async = require('async'),
-    ulParser = require('./ulParser'),
+    xmlParser = require('./xmlParser'),
     constants = require('./constants'),
     context = {
-        op: 'IOTAUL.Common.Binding'
+        op: 'IOTAXML.Common.Binding'
     };
 
 /**
@@ -164,7 +164,7 @@ function multipleMeasures(apiKey, device, message) {
     config.getLogger().debug('Processing multiple measures for device [%s] with apiKey [%s]', device.id, apiKey);
 
     try {
-        parsedMessage = ulParser.parse(messageStr);
+        parsedMessage = xmlParser.parse(messageStr);
     } catch (e) {
         config.getLogger().error(context, 'MEASURES-003: Parse error parsing incoming message [%]', messageStr);
         return;
@@ -265,10 +265,10 @@ function messageHandler(topic, message, protocol) {
             topicInformation[4] === constants.CONFIGURATION_COMMAND_SUFIX &&
             message
         ) {
-            parsedMessage = ulParser.parseConfigurationRequest(messageStr);
+            parsedMessage = xmlParser.parseConfigurationRequest(messageStr);
             manageConfigurationRequest(apiKey, deviceId, device, parsedMessage);
         } else if (topicInformation[3] === constants.CONFIGURATION_COMMAND_UPDATE) {
-            var commandObj = ulParser.result(message.toString());
+            var commandObj = xmlParser.result(message.toString());
             utils.updateCommand(
                 apiKey,
                 device,

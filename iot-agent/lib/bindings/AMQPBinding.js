@@ -1,20 +1,20 @@
 /*
  * Copyright 2017 Telefonica Investigación y Desarrollo, S.A.U
  *
- * This file is part of iotagent-ul
+ * This file is part of iotagent-xml
  *
- * iotagent-ul is free software: you can redistribute it and/or
+ * iotagent-xml is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the License,
  * or (at your option) any later version.
  *
- * iotagent-ul is distributed in the hope that it will be useful,
+ * iotagent-xml is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public
- * License along with iotagent-ul.
+ * License along with iotagent-xml.
  * If not, seehttp://www.gnu.org/licenses/.
  *
  * For those usages not covered by the GNU Affero General Public License
@@ -28,12 +28,12 @@
 var config = require('../configService'),
     constants = require('../constants'),
     utils = require('../iotaUtils'),
-    ulParser = require('../ulParser'),
+    xmlParser = require('../xmlParser'),
     amqp = require('amqplib/callback_api'),
     commons = require('./../commonBindings'),
     async = require('async'),
     context = {
-        op: 'IOTAUL.AMQP.Binding'
+        op: 'IOTAXML.AMQP.Binding'
     },
     amqpConn,
     amqpChannel;
@@ -51,7 +51,7 @@ function generateCommandExecution(apiKey, device, attribute) {
         cmdAttributes = attribute.value,
         payload;
 
-    payload = ulParser.createCommandPayload(device, cmdName, cmdAttributes);
+    payload = xmlParser.createCommandPayload(device, cmdName, cmdAttributes);
 
     // prettier-ignore
     config.getLogger().debug(
