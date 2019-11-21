@@ -31,7 +31,7 @@ var http = require('http'),
     intoTrans = iotAgentLib.intoTrans,
     express = require('express'),
     utils = require('../iotaUtils'),
-    bodyParser = require('body-parser'),
+    xmlparser = require('express-xml-bodyparser'),
     constants = require('../constants'),
     commonBindings = require('./../commonBindings'),
     errors = require('../errors'),
@@ -103,8 +103,9 @@ function checkMandatoryParams(queryPayload) {
         var notFoundParams = [],
             error;
 
-        req.apiKey = req.query.k;
-        req.deviceId = req.query.i;
+        req.apiKey = req.body["measure"]["$"]["key"];
+        req.deviceId = req.body["measure"]["$"]["device"];
+
 
         if (!req.apiKey) {
             notFoundParams.push('API Key');
@@ -119,8 +120,8 @@ function checkMandatoryParams(queryPayload) {
             notFoundParams.push('Payload');
         }
 
-        if (req.method === 'POST' && !req.is('text/plain')) {
-            error = new errors.UnsupportedType('text/plain');
+        if (req.method === 'POST' && !req.is('application/xml')) {
+            error = new errors.UnsupportedType('application/xml');
         }
 
         if (notFoundParams.length !== 0) {
@@ -273,6 +274,10 @@ function generateCommandExecution(apiKey, device, attribute) {
         cmdAttributes = attribute.value,
         options;
 
+    config.getLogger().debug(context, 'xxxxxxx');
+    config.getLogger().debug(context, device.endpoint);
+    config.getLogger().debug(context, 'xxxxxxx');
+
     options = {
         url: device.endpoint,
         method: 'POST',
@@ -287,8 +292,12 @@ function generateCommandExecution(apiKey, device, attribute) {
         options.timeout = config.getConfig().http.timeout;
     }
 
-    return function sendUlCommandHTTP(callback) {
+    return function sendXMLCommandHTTP(callback) {
         var commandObj;
+
+        config.getLogger().debug(context, 'xxxxxxx');
+        config.getLogger().debug(context, 'sendXML');
+        config.getLogger().debug(context, 'xxxxxxx');
 
         request(options, function(error, response, body) {
             if (error) {
@@ -372,7 +381,7 @@ function commandHandler(device, attributes, callback) {
 }
 
 function addDefaultHeader(req, res, next) {
-    req.headers['content-type'] = req.headers['content-type'] || 'text/plain';
+    req.headers['content-type'] = req.headers['content-type'] || 'application/xml';
     next();
 }
 
@@ -423,7 +432,7 @@ function start(callback) {
     httpBindingServer.router.post(
         config.getConfig().iota.defaultResource || constants.HTTP_MEASURE_PATH,
         addDefaultHeader,
-        bodyParser.text(),
+        xmlparser({trim: false, explicitArray: false}),
         checkMandatoryParams(false),
         parseData,
         addTimestamp,
@@ -440,7 +449,7 @@ function start(callback) {
 }
 
 function stop(callback) {
-    config.getLogger().info(context, 'Stopping Ultralight HTTP Binding: ');
+    config.getLogger().info(context, 'Stopping XML HTTP Binding: ');
 
     if (httpBindingServer) {
         httpBindingServer.server.close(function() {

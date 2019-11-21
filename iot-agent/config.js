@@ -131,7 +131,7 @@ config.iota = {
         /**
          * Port where the IoT Agent will be listening for NGSI and Provisioning requests.
          */
-        port: 4061
+        port: 4041
     },
 
     /**
@@ -232,7 +232,7 @@ config.iota = {
      * Default resource of the IoT Agent. This value must be different for every IoT Agent connecting to the IoT
      * Manager.
      */
-    defaultResource: '/iot/d',
+    defaultResource: '/iot/xml',
 
     /**
      * Defines the configuration for the Device Registry, where all the information about devices and configuration
@@ -268,7 +268,7 @@ config.iota = {
         /**
          * Name of the Mongo database that will be created to store IoT Agent data.
          */
-        db: 'iotagentul'
+        db: 'iotagentxml'
 
         /**
          * Name of the set in case the Mongo database is configured as a Replica Set. Optional otherwise.
