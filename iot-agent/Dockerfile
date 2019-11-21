@@ -1,0 +1,51 @@
+
+
+ARG NODE_VERSION=8.16.1-slim
+FROM node:${NODE_VERSION}
+ARG GITHUB_ACCOUNT=telefonicaid
+ARG GITHUB_REPOSITORY=iotagent-ul
+ARG DOWNLOAD=latest
+ARG SOURCE_BRANCH=master
+
+# Copying Build time arguments to environment variables so they are persisted at run time and can be 
+# inspected within a running container.
+# see: https://vsupalov.com/docker-build-time-env-values/  for a deeper explanation.
+
+ENV GITHUB_ACCOUNT=${GITHUB_ACCOUNT}
+ENV GITHUB_REPOSITORY=${GITHUB_REPOSITORY}
+ENV DOWNLOAD=${DOWNLOAD}
+
+MAINTAINER FIWARE IoTAgent Team. Telefónica I+D
+
+# IMPORTANT: For production environments use Docker Secrets to protect values of the sensitive ENV 
+# variables defined below, by adding _FILE to the name of the relevant variable.
+#
+# - IOTA_AUTH_USER, IOTA_AUTH_PASSWORD - when using Keystone Security 
+# - IOTA_AUTH_CLIENT_ID, IOTA_AUTH_CLIENT_SECRET - when using OAuth2 Security
+
+
+COPY . /opt/iotXML/
+
+WORKDIR /opt/iotXML
+
+RUN \
+	# Ensure that Git is installed prior to running npm install
+	apt-get update && \
+	apt-get install -y git && \
+	npm install pm2@3.2.2 -g && \
+	echo "INFO: npm install --production..." && \
+	npm install --production && \
+	# Remove Git and clean apt cache
+	apt-get clean && \
+	apt-get remove -y git && \
+	apt-get -y autoremove && \
+	chmod +x docker/entrypoint.sh
+
+USER node
+ENV NODE_ENV=production
+
+# Expose 4061 for NORTH PORT, 7896 for HTTP PORT
+EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
+
+ENTRYPOINT ["docker/entrypoint.sh"]
+CMD ["-- ", "config.js"]
