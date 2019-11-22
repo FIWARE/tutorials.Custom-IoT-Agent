@@ -1,9 +1,5 @@
-
-
-ARG NODE_VERSION=8.16.1-slim
+ARG  NODE_VERSION=10.17.0-slim
 FROM node:${NODE_VERSION}
-
-MAINTAINER FIWARE IoTAgent Team. Telefónica I+D
 
 # IMPORTANT: For production environments use Docker Secrets to protect values of the sensitive ENV 
 # variables defined below, by adding _FILE to the name of the relevant variable.

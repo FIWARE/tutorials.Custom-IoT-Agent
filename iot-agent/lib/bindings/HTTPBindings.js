@@ -31,7 +31,7 @@ var http = require('http'),
     intoTrans = iotAgentLib.intoTrans,
     express = require('express'),
     utils = require('../iotaUtils'),
-    xmlparser = require('express-xml-bodyparser'),
+    xmlBodyParser = require('express-xml-bodyparser'),
     constants = require('../constants'),
     commonBindings = require('./../commonBindings'),
     errors = require('../errors'),
@@ -274,10 +274,6 @@ function generateCommandExecution(apiKey, device, attribute) {
         cmdAttributes = attribute.value,
         options;
 
-    config.getLogger().debug(context, 'xxxxxxx');
-    config.getLogger().debug(context, device.endpoint);
-    config.getLogger().debug(context, 'xxxxxxx');
-
     options = {
         url: device.endpoint,
         method: 'POST',
@@ -294,10 +290,6 @@ function generateCommandExecution(apiKey, device, attribute) {
 
     return function sendXMLCommandHTTP(callback) {
         var commandObj;
-
-        config.getLogger().debug(context, 'xxxxxxx');
-        config.getLogger().debug(context, 'sendXML');
-        config.getLogger().debug(context, 'xxxxxxx');
 
         request(options, function(error, response, body) {
             if (error) {
@@ -423,6 +415,7 @@ function start(callback) {
     httpBindingServer.router.get(
         config.getConfig().iota.defaultResource || constants.HTTP_MEASURE_PATH,
         checkMandatoryParams(true),
+        xmlBodyParser({trim: false, explicitArray: false}),
         parseData,
         addTimestamp,
         handleIncomingMeasure,
@@ -432,7 +425,7 @@ function start(callback) {
     httpBindingServer.router.post(
         config.getConfig().iota.defaultResource || constants.HTTP_MEASURE_PATH,
         addDefaultHeader,
-        xmlparser({trim: false, explicitArray: false}),
+        xmlBodyParser({trim: false, explicitArray: false}),
         checkMandatoryParams(false),
         parseData,
         addTimestamp,

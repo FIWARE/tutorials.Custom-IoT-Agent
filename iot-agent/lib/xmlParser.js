@@ -26,6 +26,7 @@
 var errors = require('./errors'),
     constants = require('./constants'),
     config = require('./configService'),
+    xmlToJson = require('xml-parser'),
     context = {
         op: 'IOTAXML.XMLParser'
     },
@@ -90,8 +91,15 @@ function parseConfigurationRequest(payload) {
  * @return {Object}                Object containing the result information
  */
 function result(payload) {
-    config.getLogger().debug(context,'result', payload);
-    return {};
+    const data = xmlToJson(payload);
+    const result = {};
+
+    config.getLogger().debug(context,'result', JSON.stringify(payload));
+    result.deviceId = data.root.attributes.device;
+    result.command = data.root.attributes.command;
+    result.result = data.root.name;
+
+    return result;
 }
 
 /**
