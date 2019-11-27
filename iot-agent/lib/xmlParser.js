@@ -50,8 +50,6 @@ function command(payload) {
     return {};
 }
 
-
-
 /**
  * Parse a measure reporting payload, returning an array with all the measure groups restructured as objects. Throws
  * an error if the syntax is not correct.
@@ -59,6 +57,11 @@ function command(payload) {
  * @param {String} payload         XML measure reporting payload
  * @return {Array}                 Array containing an object per measure group
  */
+
+/////////////////////////////////////////////////////////////////////////
+//
+// Amended Function - extracts measure attributes from the XML Payload
+// 
 function parse(payload) {
     var result = [];
     config.getLogger().debug(context,'parse', payload);
@@ -72,6 +75,7 @@ function parse(payload) {
     }
     return result;
 }
+/////////////////////////////////////////////////////////////////////////
 
 function parseConfigurationRequest(payload) {
     config.getLogger().debug(context,'parseConfigurationRequest', payload);
@@ -90,6 +94,11 @@ function parseConfigurationRequest(payload) {
  * @param {String} payload         XML command result payload
  * @return {Object}                Object containing the result information
  */
+
+/////////////////////////////////////////////////////////////////////////
+//
+// Amended Function - extracts command result info from the XML
+// 
 function result(payload) {
     const data = xmlToJson(payload);
     const result = {};
@@ -101,6 +110,7 @@ function result(payload) {
 
     return result;
 }
+/////////////////////////////////////////////////////////////////////////
 
 /**
  * Creates the command payload string, based on the device information and command attributes.
@@ -110,6 +120,11 @@ function result(payload) {
  * @param {Object} attributes       Object containing the command parameters as attributes of the object.
  * @return {String}                 String with the codified command.
  */
+
+/////////////////////////////////////////////////////////////////////////
+//
+// Amended Function - creates a custom XML command payload
+// 
 function createCommandPayload(device, command, attributes) {
     config.getLogger().debug(context,'createCommandPayload');
     
@@ -125,8 +140,8 @@ function createCommandPayload(device, command, attributes) {
     } else {
         return '<'+ command +'  device="' + device.id + '"/>';
     }
-
 }
+/////////////////////////////////////////////////////////////////////////
 
 /**
  * Creates the configuration payload string, based on the device information.

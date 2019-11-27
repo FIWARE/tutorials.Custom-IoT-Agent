@@ -97,7 +97,10 @@ function addTimestamp(req, res, next) {
 
     next();
 }
-
+/////////////////////////////////////////////////////////////////////////
+//
+// Amended Function - checks the XML for key and device in payload
+// 
 function checkMandatoryParams(queryPayload) {
     return function(req, res, next) {
         var notFoundParams = [],
@@ -131,6 +134,7 @@ function checkMandatoryParams(queryPayload) {
         }
     };
 }
+/////////////////////////////////////////////////////////////////////////
 
 /**
  * This middleware checks whether there is any polling command pending to be sent to the device. If there is some,
@@ -398,6 +402,11 @@ function deviceProvisioningHandler(device, callback) {
     callback(null, device);
 }
 
+
+/////////////////////////////////////////////////////////////////////////
+//
+// Amended Function - uses an XML middleware to preprocess incoming measures
+// 
 function start(callback) {
     var baseRoot = '/';
 
@@ -440,6 +449,7 @@ function start(callback) {
 
     httpBindingServer.server.listen(httpBindingServer.app.get('port'), httpBindingServer.app.get('host'), callback);
 }
+/////////////////////////////////////////////////////////////////////////
 
 function stop(callback) {
     config.getLogger().info(context, 'Stopping XML HTTP Binding: ');
