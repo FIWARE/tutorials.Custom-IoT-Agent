@@ -222,17 +222,18 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"contextElements\": [\n        {\n            \"type\": \"Bell\",\n            \"isPattern\": \"false\",\n            \"id\": \"urn:ngsi-ld:Bell:001\",\n            \"attributes\": [\n                {\n                    \"name\": \"ring\",\n                    \"type\": \"command\",\n                    \"value\": \"\"\n                }\n            ]\n        }\n    ],\n    \"updateAction\": \"UPDATE\"\n}"
+							"raw": "{\n    \"actionType\": \"update\",\n    \"entities\": [\n        {\n            \"type\": \"Bell\",\n            \"id\": \"urn:ngsi-ld:Bell:001\",\n            \"ring\" : {\n                \"type\": \"command\",\n                \"value\": \"\"\n            }\n        }\n    ]\n}"
 						},
 						"url": {
-							"raw": "http://{{iot-agent}}/v1/updateContext",
+							"raw": "http://{{iot-agent}}/v2/op/update",
 							"protocol": "http",
 							"host": [
 								"{{iot-agent}}"
 							],
 							"path": [
-								"v1",
-								"updateContext"
+								"v2",
+								"op",
+								"update"
 							]
 						},
 						"description": "Before we wire-up the context broker, we can test that a command can be send to a device by making a REST request \ndirectly to the IoT Agent's North Port using the `/v1/updateContext` endpoint.\nIt is this endpoint that will eventually be invoked by the context broker once we have connected it up. \nTo test the configuration you can run the command directly as shown.\n\nIf you are viewing the device monitor page, you can also see the state of the bell change.\n\n![](https://fiware.github.io/tutorials.IoT-Agent/img/bell-ring.gif)"
