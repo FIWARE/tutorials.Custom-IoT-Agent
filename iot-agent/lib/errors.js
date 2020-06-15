@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Affero General Public
  * License along with iotagent-xml.
- * If not, seehttp://www.gnu.org/licenses/.
+ * If not, see http://www.gnu.org/licenses/.
  *
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[iot_support@tid.es]
@@ -26,7 +26,7 @@
 module.exports = {
     ParseError: function(errorMsg) {
         this.name = 'PARSE_ERROR';
-        this.message = 'There was a syntax error in the Ultralight request: ' + errorMsg;
+        this.message = 'There was a syntax error in the XML request: ' + errorMsg;
         this.code = 400;
     },
     UnsupportedType: function(expectedType) {

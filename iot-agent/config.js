@@ -87,7 +87,7 @@ config.amqp = {
  */
 config.http = {
   /**
-   * South Port where the Ultralight transport binding for HTTP will be listening for device requests.
+   * South Port where the XML transport binding for HTTP will be listening for device requests.
    */
   port: 7896
   /**
@@ -225,7 +225,7 @@ config.iota = {
   /**
    * Textual description of this IoT Agent.
    */
-  //description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)'
+  //description: 'MQTT XML IoT Agent (Node.js version)'
   //},
 
   /**
