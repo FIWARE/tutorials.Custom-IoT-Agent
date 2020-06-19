@@ -205,7 +205,7 @@ The code for the custom XML IoT Agent can be found within the
 [GitHub Repository](https://github.com/FIWARE/tutorials.Custom-IoT-Agent/tree/master/iot-agent) associated to this
 tutorial. It is a copy of the 1.12.0 version of the IoT Agent for Ultralight, lightly modified as described below. The
 associated [Dockerfile](https://github.com/FIWARE/tutorials.Custom-IoT-Agent/blob/master/iot-agent/Dockerfile) merely
-copies the code into an appropiate location within a Docker container running Node.js. This allows the component to be
+copies the code into an appropriate location within a Docker container running Node.js. This allows the component to be
 instansiated using a `docker-compose.yaml` file. The necessary configuration can be seen below:
 
 ```yaml
