@@ -118,7 +118,7 @@ broker. Details of the architecture and protocol used can be found in the
 [IoT Sensors tutorial](https://github.com/FIWARE/tutorials.IoT-Sensors) The state of each device can be seen on the JSON
 device monitor web page found at: `http://localhost:3000/device/monitor`
 
-![FIWARE Monitor](https://fiware.github.io/tutorials.IoT-Agent-JSON/img/device-monitor.png)
+![FIWARE Monitor](https://fiware.github.io/tutorials.Custom-IoT-Agent/img/device-monitor.png)
 
 # Architecture
 
@@ -147,7 +147,7 @@ Therefore the overall architecture will consist of the following elements:
 Since all interactions between the elements are initiated by HTTP requests, the entities can be containerized and run
 from exposed ports.
 
-![](https://fiware.github.io/tutorials.IoT-Agent-JSON/img/architecture.png)
+![](https://fiware.github.io/tutorials.Custom-IoT-Agent/img/architecture.png)
 
 The necessary configuration information for wiring up the IoT devices and the IoT Agent can be seen in the services
 section of the associated `docker-compose.yml` file:
@@ -697,7 +697,7 @@ curl -iX POST \
 
 If you are viewing the device monitor page, you can also see the state of the bell change.
 
-![](https://fiware.github.io/tutorials.IoT-Agent-JSON/img/bell-ring.gif)
+![](https://fiware.github.io/tutorials.Custom-IoT-Agent/img/bell-ring.gif)
 
 The result of the command to ring the bell can be read by querying the entity within the Orion Context Broker.
 
