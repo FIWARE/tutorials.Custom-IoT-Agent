@@ -94,7 +94,7 @@ lower-level CoAP transport used by the devices.
 
 The aim of this tutorial is to improve developer understanding of how to create their own custom IoT Agents, a series of
 simple modificiations has been made to the code of the Ultralight IoT Agent demonstrating how to make changes. The
-tutorial consists of a walk-through of the relevant code and a series of HTTP requests to connect the new IoT Agent. The
+tutorial consists of a walkthrough of the relevant code and a series of HTTP requests to connect the new IoT Agent. The
 code can be found within the current
 [GitHub Repository](https://github.com/FIWARE/tutorials.Custom-IoT-Agent/tree/master/iot-agent)
 
@@ -753,7 +753,7 @@ function createCommandPayload(device, command, attributes) {
 
 This is an amendment from the Ultralight protocol where the `@` and `|` symbol is generated for Ultralight devices.
 
-Howver creating a payload is only half the job, it must be sent to the device and understood, so communications must be
+However creating a payload is only half the job, it must be sent to the device and understood, so communications must be
 completed using a well-defined communications handshake. So after generating the payload the `sendXMLCommandHTTP()`
 method of `HTTPBindings.js` sends the message and passes the response to the `result()` method in `xmlParser.js` to
 interprets the command response from the device.
