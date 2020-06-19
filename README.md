@@ -409,6 +409,8 @@ Where the `<measure>` holds the relevant device ID and API key.
 
 This syntax differs from the Ultralight IoT Agent where the device ID and API key are sent as URL parameters.
 
+<h3>Reading XML - Analysing the Code</h3>
+
 The relevant changes can be found in the `HTTPBindings.js` file where an XML parser is instanciated.
 
 ```javascript
@@ -528,6 +530,8 @@ curl -L -X POST 'http://localhost:7896/iot/xml' \
     <c value="3"/>
 </measure>'
 ```
+
+<h3>Reading Measures - Analysing the Code</h3>
 
 Both the payload and the `Content-Type` have been updated. The dummy devices made a similar Ultralight request in the
 previous tutorials when the door was unlocked, you will have seen the state of each motion sensor changing and a
@@ -691,6 +695,8 @@ If you are viewing the device monitor page, you can also see the state of the be
 ![](https://fiware.github.io/tutorials.IoT-Agent-JSON/img/bell-ring.gif)
 
 The result of the command to ring the bell can be read by querying the entity within the Orion Context Broker.
+
+<h3>Reading Commands - Analysing the Code</h3>
 
 Within the custom IoT Agent the `start()` function sets a series of handler functions to fire when a request arrives
 from the context broker.
