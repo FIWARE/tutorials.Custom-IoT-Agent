@@ -18,7 +18,7 @@ devices so that measurements can be read and commands can be sent using
 The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also available as
 [Postman documentation](https://fiware.github.io/tutorials.Custom-IoT-Agent/)
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/c624b462f449c58d182b)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/f554d8e76cd7af1fe796)
 
 ## Contents
 
@@ -44,6 +44,10 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 </details>
 
 # Passing custom message formats
+
+> "And the whole earth was of one language, and of one speech."
+>
+>— Genesis 11:1
 
 As defined previously, an IoT Agent is a component that lets a group of devices send their data to and be managed from a
 Context Broker using their own native protocols. Every IoT Agent is defined for a single payload format, although they
