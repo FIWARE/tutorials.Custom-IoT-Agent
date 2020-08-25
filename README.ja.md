@@ -494,7 +494,7 @@ function checkMandatoryParams(queryPayload) {
 ### センサのプロビジョニング
 
 エンティティを作成するときは、NGSI-LD
-[仕様](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.01.01_60/gs_CIM009v010101p.pdf)
+[仕様](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.03.01_60/gs_cim009v010301p.pdf)
 に従って URN を使用するのが一般的です。さらに、データ属性を定義するときに、意味のある名前を理解しやすくなります。
 これらのマッピングは、デバイスを個別にプロビジョニングすることで定義できます。
 
@@ -505,7 +505,7 @@ function checkMandatoryParams(queryPayload) {
 -   `static_attributes` は、その名前が Context Broker に渡されるデバイスに関する静的データ (リレーションシップなど)
     を示唆しているものです
 
-> **注**: 個々の `id` が必要ない場合、または集約されたデータで十分な場合、`attributes` 
+> **注**: 個々の `id` が必要ない場合、または集約されたデータで十分な場合、`attributes`
 > は個別ではなくプロビジョニング・サービス内で定義できます。
 
 #### :three: リクエスト:

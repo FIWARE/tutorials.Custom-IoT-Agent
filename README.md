@@ -49,7 +49,7 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 
 > "And the whole earth was of one language, and of one speech."
 >
->— Genesis 11:1
+> — Genesis 11:1
 
 As defined previously, an IoT Agent is a component that lets a group of devices send their data to and be managed from a
 Context Broker using their own native protocols. Every IoT Agent is defined for a single payload format, although they
@@ -68,18 +68,18 @@ question.
 For the purpose of this tutorial we will amend code from the existing Ultralight IoT Agent to process a similar custom
 XML format. A direct comparison of the two IoT Agents can be seen below:
 
-| IoT Agent for Ultralight                                            | IoT Agent for JSON                                                                               | Protocol's Area of Concern |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------- |
-| Sample Measure `c\|1`                                               | Sample Measure `<measure device="lamp002" key="xxx">`<br/>&nbsp;`<c value="1"/>`<br/>`</measure>`| Message Payload            |
-| Sample Command `Robot1@turn\|left=30`                               | Sample Command `<turn device="Robot1">`<br/>&nbsp;`<left>30</left>`<br/>`</turn>`                | Message Payload            |
-| Content Type is `text/plain`                                        | Content Type is `application/xml`                                                                | Message Payload            |
-| Offers 3 transports - HTTP, MQTT and AMPQ                           | Offers 3 transports - HTTP, MQTT and AMPQ                                                        | Transport Mechanism        |
-| HTTP listens for measures on `iot/d` by default                     | HTTP listens for measures on `iot/xml` by default                                                | Transport Mechanism        |
-| HTTP devices are identified by parameters `?i=XXX&k=YYY`            | HTTP devices are identified by payload `<measure device="XXX" key="YYY">`                        | Device Identification      |
-| HTTP commands posted to a well-known URL - response is in the reply | HTTP commands posted to a well-known URL - response is in the reply                              | Communications Handshake   |
-| MQTT devices are identified by the path of the topic `/XXX/YYY`     | MQTT devices are identified by the path of the topic `/XXX/YYY`                                  | Device Identification      |
-| MQTT commands posted to the `cmd` topic                             | MQTT commands posted to the `cmd` topic                                                          | Communications Handshake   |
-| MQTT command responses posted to the `cmdexe` topic                 | MQTT commands posted to the `cmdexe` topic                                                       | Communications Handshake   |
+| IoT Agent for Ultralight                                            | IoT Agent for JSON                                                                                | Protocol's Area of Concern |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------- |
+| Sample Measure `c\|1`                                               | Sample Measure `<measure device="lamp002" key="xxx">`<br/>&nbsp;`<c value="1"/>`<br/>`</measure>` | Message Payload            |
+| Sample Command `Robot1@turn\|left=30`                               | Sample Command `<turn device="Robot1">`<br/>&nbsp;`<left>30</left>`<br/>`</turn>`                 | Message Payload            |
+| Content Type is `text/plain`                                        | Content Type is `application/xml`                                                                 | Message Payload            |
+| Offers 3 transports - HTTP, MQTT and AMPQ                           | Offers 3 transports - HTTP, MQTT and AMPQ                                                         | Transport Mechanism        |
+| HTTP listens for measures on `iot/d` by default                     | HTTP listens for measures on `iot/xml` by default                                                 | Transport Mechanism        |
+| HTTP devices are identified by parameters `?i=XXX&k=YYY`            | HTTP devices are identified by payload `<measure device="XXX" key="YYY">`                         | Device Identification      |
+| HTTP commands posted to a well-known URL - response is in the reply | HTTP commands posted to a well-known URL - response is in the reply                               | Communications Handshake   |
+| MQTT devices are identified by the path of the topic `/XXX/YYY`     | MQTT devices are identified by the path of the topic `/XXX/YYY`                                   | Device Identification      |
+| MQTT commands posted to the `cmd` topic                             | MQTT commands posted to the `cmd` topic                                                           | Communications Handshake   |
+| MQTT command responses posted to the `cmdexe` topic                 | MQTT commands posted to the `cmdexe` topic                                                        | Communications Handshake   |
 
 As can be seen, the supported communications transports (HTTP, MQTT, AMPQ) remain the same, it is processing of the
 custom payload which will need to be adapted to ensure that the XML devices can communicate with the IoT Agent.
@@ -476,7 +476,7 @@ not hold sufficient information.
 ### Provisioning a Sensor
 
 It is common good practice to use URNs following the NGSI-LD
-[specification](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.01.01_60/gs_CIM009v010101p.pdf) when creating
+[specification](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.03.01_60/gs_cim009v010301p.pdf) when creating
 entities. Furthermore it is easier to understand meaningful names when defining data attributes. These mappings can be
 defined by provisioning a device individually.
 
