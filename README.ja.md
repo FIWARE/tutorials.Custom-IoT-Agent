@@ -322,6 +322,7 @@ Docker version 18.03 以降と Docker Compose 1.21 以降を使用している�
 ```console
 git clone https://github.com/FIWARE/tutorials.Custom-IoT-Agent.git
 cd tutorials.Custom-IoT-Agent
+git checkout NGSI-v2
 
 ./services create
 ```
