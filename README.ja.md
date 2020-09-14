@@ -327,7 +327,7 @@ git checkout NGSI-v2
 ./services create
 ```
 
-その後、リポジトリ内で提供される [services](https://github.com/FIWARE/tutorials.IoT-Agent/blob/master/services) Bash
+その後、リポジトリ内で提供される [services](https://github.com/FIWARE/tutorials.IoT-Agent/blob/NGSI-v2/services) Bash
 スクリプトを実行することにより、コマンドラインからすべてのサービスを初期化できます:
 
 ```console
