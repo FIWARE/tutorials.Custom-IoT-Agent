@@ -113,7 +113,7 @@
 #### デバイス・モニタ
 
 このチュートリアルのために、一連のダミー IoT デバイスが作成され、Context Broker に接続されます。使用されている
-アーキテクチャとプロトコルの詳細は、[IoT センサのチュートリアル](https://github.com/FIWARE/tutorials.IoT-Sensors)
+アーキテクチャとプロトコルの詳細は、[IoT センサのチュートリアル](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-v2)
 をご覧ください。各デバイスの状態は、JSON デバイス・モニタの 次の Web ページで確認できます:
 `http://localhost:3000/device/monitor`
 
@@ -142,7 +142,7 @@ Broker と IoT Agent の両方が、オープンソースの [MongoDB](https://w
         コンテキスト・データ情報を保持するために使用
     -   **IoT Agent** がデバイスの URL やキーなどのデバイス情報を保持するために使用
 -   HTTP で実行されているカスタム XML メッセージング・プロトコルを使用する
-    [ダミー IoT デバイス](https://github.com/FIWARE/tutorials.IoT-Sensors)のセットとして機能する Web サーバ
+    [ダミー IoT デバイス](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-v2)のセットとして機能する Web サーバ
 
 要素間のすべての対話は HTTP リクエストによって開始されるため、エンティティをコンテナ化し、
 公開されたポートから実行できます。
