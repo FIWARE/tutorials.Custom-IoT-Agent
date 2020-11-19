@@ -116,8 +116,8 @@ This base functionality has been abstracted out into a common
 
 For the purpose of this tutorial, a series of dummy IoT devices have been created, which will be attached to the context
 broker. Details of the architecture and protocol used can be found in the
-[IoT Sensors tutorial](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-v2) The state of each device can be seen on the JSON
-device monitor web page found at: `http://localhost:3000/device/monitor`
+[IoT Sensors tutorial](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-v2) The state of each device can be
+seen on the JSON device monitor web page found at: `http://localhost:3000/device/monitor`
 
 ![FIWARE Monitor](https://fiware.github.io/tutorials.Custom-IoT-Agent/img/device-monitor.png)
 
@@ -142,8 +142,8 @@ Therefore the overall architecture will consist of the following elements:
     -   Used by the **Orion Context Broker** to hold context data information such as data entities, subscriptions and
         registrations
     -   Used by the **IoT Agent** to hold device information such as device URLs and Keys
--   A webserver acting as set of [dummy IoT devices](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-v2) using the custom
-    XML messaging protocol running over HTTP.
+-   A webserver acting as set of [dummy IoT devices](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-v2) using
+    the custom XML messaging protocol running over HTTP.
 
 Since all interactions between the elements are initiated by HTTP requests, the entities can be containerized and run
 from exposed ports.
@@ -438,7 +438,7 @@ This means that attributes from the XML request can be accessed using the square
 
 ```javascript
 function checkMandatoryParams(queryPayload) {
-    return function(req, res, next) {
+    return function (req, res, next) {
         var notFoundParams = [],
             error;
 
@@ -742,7 +742,7 @@ function createCommandPayload(device, command, attributes) {
     if (typeof attributes === "object") {
         let payload = "<" + command + '  device="' + device.id + '">';
 
-        Object.keys(attributes).forEach(function(key, value) {
+        Object.keys(attributes).forEach(function (key, value) {
             payload = payload + "<" + key + ">" + value + "</" + key + ">";
         });
         payload = payload + "</" + command + ">";
