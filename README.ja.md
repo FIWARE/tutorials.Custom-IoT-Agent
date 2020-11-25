@@ -65,7 +65,7 @@
 このチュートリアルでは、既存の Ultralight IoT Agent のコードを修正して、同様のカスタム XML 形式を処理します。
 2つの IoT Agent の直接比較を以下に示します:
 
-| IoT Agent for Ultralight                                             | IoT Agent for JSON                                                                                  | プロトコルの関心領域       |
+| IoT Agent for Ultralight                                             | IoT Agent for XML                                                                                   | プロトコルの関心領域       |
 | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | -------------------------- |
 | 測定値のサンプル `c\|1`                                              | 測定値のサンプル `<measure device="lamp002" key="xxx">`<br/>&nbsp;`<c value="1"/>`<br/>`</measure>` | メッセージ・ペイロード     |
 | コマンドのサンプル `Robot1@turn\|left=30`                            | コマンドのサンプル `<turn device="Robot1">`<br/>&nbsp;`<left>30</left>`<br/>`</turn>`               | メッセージ・ペイロード     |
@@ -114,7 +114,7 @@
 
 このチュートリアルのために、一連のダミー IoT デバイスが作成され、Context Broker に接続されます。使用されている
 アーキテクチャとプロトコルの詳細は、[IoT センサのチュートリアル](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-v2)
-をご覧ください。各デバイスの状態は、JSON デバイス・モニタの 次の Web ページで確認できます:
+をご覧ください。各デバイスの状態は、XML デバイス・モニタの 次の Web ページで確認できます:
 `http://localhost:3000/device/monitor`
 
 ![FIWARE Monitor](https://fiware.github.io/tutorials.Custom-IoT-Agent/img/device-monitor.png)
@@ -192,8 +192,8 @@ tutorial:
 | ----------------------- | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | DEBUG                   | `tutorial:*`                 | ロギングに使用されるデバッグ・フラグ                                                                                                         |
 | WEB_APP_PORT            | `3000`                       | ダミー IoT デバイスのデータを表示する Web アプリが使用するポート                                                                             |
-| IOTA_HTTP_HOST          | `iot-agent`                  | JSON の IoT Agent のホスト名。以下を参照してください                                                                                         |
-| IOTA_HTTP_PORT          | `7896`                       | JSON 用の IoT Agent がリッスンするポート。`7896` は JSON over HTTP の一般的なデフォルトです                                                  |
+| IOTA_HTTP_HOST          | `iot-agent`                  | XML の IoT Agent のホスト名。以下を参照してください                                                                                         |
+| IOTA_HTTP_PORT          | `7896`                       | XML 用の IoT Agent がリッスンするポート。`7896` は XML over HTTP の一般的なデフォルトです                                                  |
 | DUMMY_DEVICES_PORT      | `3001`                       | コマンドを受信するために ダミー IoT デバイスが使用するポート                                                                                 |
 | DUMMY_DEVICES_API_KEY   | `4jggokgpepnvsb2uv4s40d59ov` | IoT インタラクションに使用される ランダム・セキュリティ・キー。デバイスと IoT Agent 間のインタラクションの完全性を保証するために使用されます |
 | DUMMY_DEVICES_TRANSPORT | `HTTP`                       | ダミー IoT デバイスで使用されるトランスポート・プロトコル                                                                                    |
@@ -241,7 +241,7 @@ iot-agent:
         - IOTA_AUTOCAST=true
         - IOTA_MONGO_HOST=mongo-db
         - IOTA_MONGO_PORT=27017
-        - IOTA_MONGO_DB=iotagentjson
+        - IOTA_MONGO_DB=iotagentxml
         - IOTA_HTTP_PORT=7896
         - IOTA_PROVIDER_URL=http://iot-agent:4041
         - IOTA_DEFAULT_RESOURCE=/iot/xml
@@ -250,7 +250,7 @@ iot-agent:
 `iot-agent` コンテナは Orion Context Broker の存在に依存し、MongoDB データベースを使用してデバイスの URL やキーなどの
 デバイス情報を保持します。コンテナは2つのポートでリッスンしています:
 
--   ポート `7896` が公開され、ダミー IoT デバイスから HTTP 経由で JSON 測定値を受信します
+-   ポート `7896` が公開され、ダミー IoT デバイスから HTTP 経由で XML 測定値を受信します
 -   ポート `4041`は、純粋にチュートリアル・アクセス用に公開されています。そのため、cUrl または Postman は、
     同じネットワークに属さなくてもプロビジョニング・コマンドを実行できます
 
@@ -265,10 +265,10 @@ iot-agent:
 | IOTA_LOG_LEVEL        | `DEBUG`                 | IoT Agent のログレベル                                                                                                                            |
 | IOTA_TIMESTAMP        | `true`                  | 接続されたデバイスから受信した各測定でタイムスタンプ情報を提供するかどうか                                                                        |
 | IOTA_CB_NGSI_VERSION  | `v2`                    | アクティブな属性の更新を送信するときに NGSI v2 を使用するかどうか                                                                                 |
-| IOTA_AUTOCAST         | `true`                  | JSON の数値が文字列ではなく数値として読み取られるようにする                                                                                       |
+| IOTA_AUTOCAST         | `true`                  | XML の数値が文字列ではなく数値として読み取られるようにする                                                                                       |
 | IOTA_MONGO_HOST       | `context-db`            | mongo DB のホスト名。デバイス情報を保持するために使用されます                                                                                     |
 | IOTA_MONGO_PORT       | `27017`                 | mongoDB がリッスンしているポート                                                                                                                  |
-| IOTA_MONGO_DB         | `iotagentjson`          | mongoDB で使用されるデータベースの名前                                                                                                            |
+| IOTA_MONGO_DB         | `iotagentxml`          | mongoDB で使用されるデータベースの名前                                                                                                            |
 | IOTA_HTTP_PORT        | `7896`                  | IoT Agent がHTTP 経由で IoT デバイスのトラフィックをリッスンするポート                                                                            |
 | IOTA_PROVIDER_URL     | `http://iot-agent:4041` | コマンドの登録時に Context Broker に渡される URL。ContextBroker がデバイスにコマンドを発行するときにフォワーディング URL の場所として使用されます |
 | IOTA_DEFAULT_RESOURCE | `/iot/xml`              | IoT Agent がカスタム XML 測定値のリッスンに使用するデフォルトパス                                                                                 |
@@ -641,7 +641,7 @@ curl -X GET \
 ### アクチュエータのプロビジョニング
 
 アクチュエータのプロビジョニングは、センサのプロビジョニングに似ています。今回、 `endpoint` 属性は、IoT Agent が
-JSON コマンドを送信する必要がある場所を保持し、`commands` 配列には、呼び出すことができる各コマンドのリストが
+XML コマンドを送信する必要がある場所を保持し、`commands` 配列には、呼び出すことができる各コマンドのリストが
 含まれています。以下の例では、 `deviceId=bell001` でベルをプロビジョニングします。エンドポイントは
 `http://iot-sensors:3001/iot/bell001` で、`ring` コマンドを受け入れることができます。`transport=HTTP`
 属性は、使用する通信プロトコルを定義します。
