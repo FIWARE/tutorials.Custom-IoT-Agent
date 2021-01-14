@@ -36,7 +36,7 @@ services:
       test: curl --fail -s http://orion:${ORION_PORT}/version || exit 1
       interval: 5s
 
-  # IoT-Agent is configured for the UltraLight Protocol
+  # IoT-Agent is configured for the Custom XML Protocol
   iot-agent:
     image: fiware/iotagent-xml
     build:
@@ -70,7 +70,8 @@ services:
       - IOTA_PROVIDER_URL=http://iot-agent:${IOTA_NORTH_PORT}
       - IOTA_DEFAULT_RESOURCE=/iot/xml
     healthcheck:
-      test: curl --fail -s http://iot-agent:${IOTA_NORTH_PORT}/iot/about || exit 1
+      interval: 5s
+
 
   # Tutorial acts as a series of dummy IoT Sensors over HTTP
   tutorial:
