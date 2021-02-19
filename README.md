@@ -1,10 +1,10 @@
-[![FIWARE Banner](https://fiware.github.io/tutorials.IoT-Agent/img/fiware.png)](https://www.fiware.org/developers)
+[![FIWARE Banner](https://fiware.github.io/tutorials.IoT-over-MQTT/img/fiware.png)](https://www.fiware.org/developers)
 [![NGSI v2](https://img.shields.io/badge/NGSI-v2-5dc0cf.svg)](https://fiware-ges.github.io/orion/api/v2/stable/)
 
 [![FIWARE IoT Agents](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/iot-agents.svg)](https://github.com/FIWARE/catalogue/blob/master/iot-agents/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Iot-Agent.svg)](https://opensource.org/licenses/MIT)
-[![Support badge](https://img.shields.io/badge/tag-fiware-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware)
-![XML](https://img.shields.io/badge/Payload-XML-e8ce27.svg)<br/>
+[![Support badge](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/fiware.svg)](https://stackoverflow.com/questions/tagged/fiware)
+<br/>
 [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 This tutorial a wires up the dummy IoT devices which are responding using a custom [XML](https://www.w3.org/TR/xml11/)
@@ -19,8 +19,6 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 [Postman documentation](https://fiware.github.io/tutorials.Custom-IoT-Agent/)
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/f554d8e76cd7af1fe796)
-
--   このチュートリアルは[日本語](README.ja.md)でもご覧いただけます。
 
 ## Contents
 
@@ -49,7 +47,7 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 
 > "And the whole earth was of one language, and of one speech."
 >
-> — Genesis 11:1
+>— Genesis 11:1
 
 As defined previously, an IoT Agent is a component that lets a group of devices send their data to and be managed from a
 Context Broker using their own native protocols. Every IoT Agent is defined for a single payload format, although they
@@ -68,18 +66,19 @@ question.
 For the purpose of this tutorial we will amend code from the existing Ultralight IoT Agent to process a similar custom
 XML format. A direct comparison of the two IoT Agents can be seen below:
 
-| IoT Agent for Ultralight                                            | IoT Agent for XML                                                                                 | Protocol's Area of Concern |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------- |
-| Sample Measure `c\|1`                                               | Sample Measure `<measure device="lamp002" key="xxx">`<br/>&nbsp;`<c value="1"/>`<br/>`</measure>` | Message Payload            |
-| Sample Command `Robot1@turn\|left=30`                               | Sample Command `<turn device="Robot1">`<br/>&nbsp;`<left>30</left>`<br/>`</turn>`                 | Message Payload            |
-| Content Type is `text/plain`                                        | Content Type is `application/xml`                                                                 | Message Payload            |
-| Offers 3 transports - HTTP, MQTT and AMPQ                           | Offers 3 transports - HTTP, MQTT and AMPQ                                                         | Transport Mechanism        |
-| HTTP listens for measures on `iot/d` by default                     | HTTP listens for measures on `iot/xml` by default                                                 | Transport Mechanism        |
-| HTTP devices are identified by parameters `?i=XXX&k=YYY`            | HTTP devices are identified by payload `<measure device="XXX" key="YYY">`                         | Device Identification      |
-| HTTP commands posted to a well-known URL - response is in the reply | HTTP commands posted to a well-known URL - response is in the reply                               | Communications Handshake   |
-| MQTT devices are identified by the path of the topic `/XXX/YYY`     | MQTT devices are identified by the path of the topic `/XXX/YYY`                                   | Device Identification      |
-| MQTT commands posted to the `cmd` topic                             | MQTT commands posted to the `cmd` topic                                                           | Communications Handshake   |
-| MQTT command responses posted to the `cmdexe` topic                 | MQTT commands posted to the `cmdexe` topic                                                        | Communications Handshake   |
+| IoT Agent for Ultralight                                            | IoT Agent for JSON                                                                    | Protocol's Area of Concern |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------------- |
+| Sample Measure `c\|1`                                               | Sample Measure `<measure device="lamp002" key="xxx">`<br/>&nbsp;`<c value="1"/>`<br/> |
+| `</measure>`                                                        | Message Payload                                                                       |
+| Sample Command `Robot1@turn\|left=30`                               | Sample Command `<turn device="Robot1">`<br/>&nbsp;`<left>30</left>`<br/>`</turn>`     | Message Payload            |
+| Content Type is `text/plain`                                        | Content Type is `application/xml`                                                     | Message Payload            |
+| Offers 3 transports - HTTP, MQTT and AMPQ                           | Offers 3 transports - HTTP, MQTT and AMPQ                                             | Transport Mechanism        |
+| HTTP listens for measures on `iot/d` by default                     | HTTP listens for measures on `iot/xml` by default                                     | Transport Mechanism        |
+| HTTP devices are identified by parameters `?i=XXX&k=YYY`            | HTTP devices are identified by payload `<measure device="XXX" key="YYY">`             | Device Identification      |
+| HTTP commands posted to a well-known URL - response is in the reply | HTTP commands posted to a well-known URL - response is in the reply                   | Communications Handshake   |
+| MQTT devices are identified by the path of the topic `/XXX/YYY`     | MQTT devices are identified by the path of the topic `/XXX/YYY`                       | Device Identification      |
+| MQTT commands posted to the `cmd` topic                             | MQTT commands posted to the `cmd` topic                                               | Communications Handshake   |
+| MQTT command responses posted to the `cmdexe` topic                 | MQTT commands posted to the `cmdexe` topic                                            | Communications Handshake   |
 
 As can be seen, the supported communications transports (HTTP, MQTT, AMPQ) remain the same, it is processing of the
 custom payload which will need to be adapted to ensure that the XML devices can communicate with the IoT Agent.
@@ -94,8 +93,8 @@ lower-level CoAP transport used by the devices.
 ## The teaching goal of this tutorial
 
 The aim of this tutorial is to improve developer understanding of how to create their own custom IoT Agents, a series of
-simple modifications has been made to the code of the Ultralight IoT Agent demonstrating how to make changes. The
-tutorial consists of a walkthrough of the relevant code and a series of HTTP requests to connect the new IoT Agent. The
+simple modificiations has been made to the code of the Ultralight IoT Agent demonstrating how to make changes. The
+tutorial consists of a walk-through of the relevant code and a series of HTTP requests to connect the new IoT Agent. The
 code can be found within the current
 [GitHub Repository](https://github.com/FIWARE/tutorials.Custom-IoT-Agent/tree/master/iot-agent)
 
@@ -116,10 +115,10 @@ This base functionality has been abstracted out into a common
 
 For the purpose of this tutorial, a series of dummy IoT devices have been created, which will be attached to the context
 broker. Details of the architecture and protocol used can be found in the
-[IoT Sensors tutorial](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-v2) The state of each device can be
-seen on the XML device monitor web page found at: `http://localhost:3000/device/monitor`
+[IoT Sensors tutorial](https://github.com/FIWARE/tutorials.IoT-Sensors) The state of each device can be seen on the JSON
+device monitor web page found at: `http://localhost:3000/device/monitor`
 
-![FIWARE Monitor](https://fiware.github.io/tutorials.Custom-IoT-Agent/img/device-monitor.png)
+![FIWARE Monitor](https://fiware.github.io/tutorials.IoT-Agent-JSON/img/device-monitor.png)
 
 # Architecture
 
@@ -142,13 +141,13 @@ Therefore the overall architecture will consist of the following elements:
     -   Used by the **Orion Context Broker** to hold context data information such as data entities, subscriptions and
         registrations
     -   Used by the **IoT Agent** to hold device information such as device URLs and Keys
--   A webserver acting as set of [dummy IoT devices](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-v2) using
-    the custom XML messaging protocol running over HTTP.
+-   A webserver acting as set of [dummy IoT devices](https://github.com/FIWARE/tutorials.IoT-Sensors) using the custom
+    XML messaging protocol running over HTTP.
 
 Since all interactions between the elements are initiated by HTTP requests, the entities can be containerized and run
 from exposed ports.
 
-![](https://fiware.github.io/tutorials.Custom-IoT-Agent/img/architecture.png)
+![](https://fiware.github.io/tutorials.IoT-Agent-JSON/img/architecture.png)
 
 The necessary configuration information for wiring up the IoT devices and the IoT Agent can be seen in the services
 section of the associated `docker-compose.yml` file:
@@ -182,8 +181,8 @@ tutorial:
 The `tutorial` container is listening on two ports:
 
 -   Port `3000` is exposed so we can see the web page displaying the Dummy IoT devices.
--   Port `3001` is exposed purely for tutorial access - so that cUrl or Postman can make XML commands without being part
-    of the same network.
+-   Port `3001` is exposed purely for tutorial access - so that cUrl or Postman can make JSON commands without being
+    part of the same network.
 
 The `tutorial` container is driven by environment variables as shown:
 
@@ -191,8 +190,8 @@ The `tutorial` container is driven by environment variables as shown:
 | ----------------------- | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | DEBUG                   | `tutorial:*`                 | Debug flag used for logging                                                                                                        |
 | WEB_APP_PORT            | `3000`                       | Port used by web-app which displays the dummy device data                                                                          |
-| IOTA_HTTP_HOST          | `iot-agent`                  | The hostname of the IoT Agent for XML - see below                                                                                  |
-| IOTA_HTTP_PORT          | `7896`                       | The port that the IoT Agent for XML will be listening on. `7896` is a common default for comms over HTTP                           |
+| IOTA_HTTP_HOST          | `iot-agent`                  | The hostname of the IoT Agent for JSON - see below                                                                                 |
+| IOTA_HTTP_PORT          | `7896`                       | The port that the IoT Agent for JSON will be listening on. `7896` is a common default for JSON over HTTP                           |
 | DUMMY_DEVICES_PORT      | `3001`                       | Port used by the dummy IoT devices to receive commands                                                                             |
 | DUMMY_DEVICES_API_KEY   | `4jggokgpepnvsb2uv4s40d59ov` | Random security key used for IoT interactions - used to ensure the integrity of interactions between the devices and the IoT Agent |
 | DUMMY_DEVICES_TRANSPORT | `HTTP`                       | The transport protocol used by the dummy IoT devices                                                                               |
@@ -206,8 +205,8 @@ The code for the custom XML IoT Agent can be found within the
 [GitHub Repository](https://github.com/FIWARE/tutorials.Custom-IoT-Agent/tree/master/iot-agent) associated to this
 tutorial. It is a copy of the 1.12.0 version of the IoT Agent for Ultralight, lightly modified as described below. The
 associated [Dockerfile](https://github.com/FIWARE/tutorials.Custom-IoT-Agent/blob/master/iot-agent/Dockerfile) merely
-copies the code into an appropriate location within a Docker container running Node.js. This allows the component to be
-instantiated using a `docker-compose.yaml` file. The necessary configuration can be seen below:
+copies the code into an appropiate location within a Docker container running Node.js. This allows the component to be
+instansiated using a `docker-compose.yaml` file. The necessary configuration can be seen below:
 
 ```yaml
 iot-agent:
@@ -238,16 +237,16 @@ iot-agent:
         - IOTA_AUTOCAST=true
         - IOTA_MONGO_HOST=mongo-db
         - IOTA_MONGO_PORT=27017
-        - IOTA_MONGO_DB=iotagentxml
+        - IOTA_MONGO_DB=iotagentjson
         - IOTA_HTTP_PORT=7896
         - IOTA_PROVIDER_URL=http://iot-agent:4041
         - IOTA_DEFAULT_RESOURCE=/iot/xml
 ```
 
-The `iot-agent` container relies on the presence of the Orion Context Broker and uses a MongoDB database to hold device
+The `iot-agent` container relies on the precence of the Orion Context Broker and uses a MongoDB database to hold device
 information such as device URLs and Keys. The container is listening on two ports:
 
--   Port `7896` is exposed to receive XML measurements over HTTP from the Dummy IoT devices
+-   Port `7896` is exposed to receive JSON measurements over HTTP from the Dummy IoT devices
 -   Port `4041` is exposed purely for tutorial access - so that cUrl or Postman can make provisioning commands without
     being part of the same network.
 
@@ -262,10 +261,10 @@ The `iot-agent` container is driven by environment variables as shown:
 | IOTA_LOG_LEVEL        | `DEBUG`                 | The log level of the IoT Agent                                                                                                                        |
 | IOTA_TIMESTAMP        | `true`                  | Whether to supply timestamp information with each measurement received from attached devices                                                          |
 | IOTA_CB_NGSI_VERSION  | `v2`                    | Whether to supply use NGSI v2 when sending updates for active attributes                                                                              |
-| IOTA_AUTOCAST         | `true`                  | Ensure XML number values are read as numbers not strings                                                                                              |
+| IOTA_AUTOCAST         | `true`                  | Ensure JSON number values are read as numbers not strings                                                                                             |
 | IOTA_MONGO_HOST       | `context-db`            | The hostname of mongoDB - used for holding device information                                                                                         |
 | IOTA_MONGO_PORT       | `27017`                 | The port mongoDB is listening on                                                                                                                      |
-| IOTA_MONGO_DB         | `iotagentxml`           | The name of the database used in mongoDB                                                                                                              |
+| IOTA_MONGO_DB         | `iotagentjson`          | The name of the database used in mongoDB                                                                                                              |
 | IOTA_HTTP_PORT        | `7896`                  | The port where the IoT Agent listens for IoT device traffic over HTTP                                                                                 |
 | IOTA_PROVIDER_URL     | `http://iot-agent:4041` | URL passed to the Context Broker when commands are registered, used as a forwarding URL location when the Context Broker issues a command to a device |
 | IOTA_DEFAULT_RESOURCE | `/iot/xml`              | The default path the IoT Agent uses listenening for custom XML measures.                                                                              |
@@ -310,13 +309,12 @@ repository and create the necessary images by running the commands as shown:
 ```console
 git clone https://github.com/FIWARE/tutorials.Custom-IoT-Agent.git
 cd tutorials.Custom-IoT-Agent
-git checkout NGSI-v2
 
 ./services create
 ```
 
 Thereafter, all services can be initialized from the command-line by running the
-[services](https://github.com/FIWARE/tutorials.IoT-Agent/blob/NGSI-v2/services) Bash script provided within the
+[services](https://github.com/FIWARE/tutorials.IoT-Agent/blob/master/services) Bash script provided within the
 repository:
 
 ```console
@@ -364,7 +362,7 @@ The response will look similar to the following:
 }
 ```
 
-This is standard functionality coming directly from the IoT Agent Node.js library and does not involve a code changes.
+This is standard functionality coming directly from the IoT Agent Node.js library and does not involve an code changes.
 
 ### Provisioning a Service Group
 
@@ -416,9 +414,7 @@ Where the `<measure>` holds the relevant device ID and API key.
 
 This syntax differs from the Ultralight IoT Agent where the device ID and API key are sent as URL parameters.
 
-<h3>Reading XML - Analysing the Code</h3>
-
-The relevant changes can be found in the `HTTPBindings.js` file where an XML parser is instantiated.
+The relevant changes can be found in the `HTTPBindings.js` file where an XML parser is instanciated.
 
 ```javascript
 const xmlBodyParser = require("express-xml-bodyparser");
@@ -477,7 +473,7 @@ not hold sufficient information.
 ### Provisioning a Sensor
 
 It is common good practice to use URNs following the NGSI-LD
-[specification](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.03.01_60/gs_cim009v010301p.pdf) when creating
+[specification](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.01.01_60/gs_CIM009v010101p.pdf) when creating
 entities. Furthermore it is easier to understand meaningful names when defining data attributes. These mappings can be
 defined by provisioning a device individually.
 
@@ -522,7 +518,7 @@ As expected the HTTP command to **provision a device** does not change based on 
 protocol since we are using the same HTTP transport as the original Ultralight IoT Agent. `internal_atttributes` can be
 used to supply additional information for the custom IoT Agent if necessary. In the request we are associating the
 device `motion001` with the URN `urn:ngsi-ld:Motion:001` and mapping the device reading `c` with the context attribute
-`count` (which is defined as an `Integer`). A `refStore` is defined as a `static_attribute`, placing the device within
+`count` (which is defined as an `Integer`) A `refStore` is defined as a `static_attribute`, placing the device within
 **Store** `urn:ngsi-ld:Store:001`
 
 You can simulate a dummy IoT device measurement coming from the **Motion Sensor** device `motion001`, by making the
@@ -537,8 +533,6 @@ curl -L -X POST 'http://localhost:7896/iot/xml' \
     <c value="3"/>
 </measure>'
 ```
-
-<h3>Reading Measures - Analysing the Code</h3>
 
 Both the payload and the `Content-Type` have been updated. The dummy devices made a similar Ultralight request in the
 previous tutorials when the door was unlocked, you will have seen the state of each motion sensor changing and a
@@ -623,7 +617,7 @@ within the context data.
 ### Provisioning an Actuator
 
 Provisioning an actuator is similar to provisioning a sensor. This time an `endpoint` attribute holds the location where
-the IoT Agent needs to send the XML command and the `commands` array includes a list of each command that can be
+the IoT Agent needs to send the JSON command and the `commands` array includes a list of each command that can be
 invoked. The example below provisions a bell with the `deviceId=bell001`. The endpoint is
 `http://iot-sensors:3001/iot/bell001` and it can accept the `ring` command. The `transport=HTTP` attribute defines the
 communications protocol to be used.
@@ -699,11 +693,9 @@ curl -iX POST \
 
 If you are viewing the device monitor page, you can also see the state of the bell change.
 
-![](https://fiware.github.io/tutorials.Custom-IoT-Agent/img/bell-ring.gif)
+![](https://fiware.github.io/tutorials.IoT-Agent-JSON/img/bell-ring.gif)
 
 The result of the command to ring the bell can be read by querying the entity within the Orion Context Broker.
-
-<h3>Reading Commands - Analysing the Code</h3>
 
 Within the custom IoT Agent the `start()` function sets a series of handler functions to fire when a request arrives
 from the context broker.
@@ -755,7 +747,7 @@ function createCommandPayload(device, command, attributes) {
 
 This is an amendment from the Ultralight protocol where the `@` and `|` symbol is generated for Ultralight devices.
 
-However creating a payload is only half the job, it must be sent to the device and understood, so communications must be
+Howver creating a payload is only half the job, it must be sent to the device and understood, so communications must be
 completed using a well-defined communications handshake. So after generating the payload the `sendXMLCommandHTTP()`
 method of `HTTPBindings.js` sends the message and passes the response to the `result()` method in `xmlParser.js` to
 interprets the command response from the device.
