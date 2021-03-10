@@ -111,6 +111,9 @@ case "${command}" in
 		export $(cat .env | grep "#" -v)
 		echo "Pulling Docker images"
 		docker-compose --log-level ERROR -p fiware pull
+		cd iot-agent
+		docker build -t fiware/iotagent-xml --no-cache .
+		cd ..
 		;;
 	*)
 		echo "Command not Found."

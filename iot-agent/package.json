@@ -1,13 +1,14 @@
 {
   "name": "iotagent-xml",
   "license": "AGPL-3.0-only",
-  "description": "IoT Agent for the Ultrlight 2.0 protocol",
-  "version": "1.12.0",
+  "description": "IoT Agent for a Custom XML protocol",
+  "version": "1.16.0",
   "main": "lib/iotagent-xml",
   "engines": {
-    "node": ">=8"
+    "node": ">=12"
   },
   "scripts": {
+    "healthcheck": "node ./bin/healthcheck",
     "start": "node ./bin/iotagent-xml",
     "prettier": "prettier --parser flow --single-quote --write **/**/*.js  **/*.js *.js"
   },
@@ -18,7 +19,7 @@
     "express-xml-bodyparser": "^0.3.0",
     "dateformat": "3.0.3",
     "express": "~4.16.4",
-    "iotagent-node-lib": "2.11.0",
+    "iotagent-node-lib": "2.15.0",
     "logops": "2.1.0",
     "mqtt": "3.0.0",
     "request": "2.88.0",
