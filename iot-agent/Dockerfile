@@ -31,7 +31,7 @@ LABEL "org.opencontainers.image.documentation"="https://fiware-tutorials.readthe
 LABEL "org.opencontainers.image.vendor"="FIWARE Foundation e.V."
 LABEL "org.opencontainers.image.licenses"="AGPL-3.0-only"
 LABEL "org.opencontainers.image.title"="IoT Agent for a custom XML protocol"
-LABEL "org.opencontainers.image.description"="An Internet of Things Agent for a XML protocol (with AMQP, HTTP and MQTT transports). This IoT Agent is designed to be a bridge between Ultralight and the NGSI interface of a context broker."
+LABEL "org.opencontainers.image.description"="An Internet of Things Agent for an XML protocol (with AMQP, HTTP and MQTT transports). This IoT Agent is designed to be a bridge between XML and the NGSI interface of a context broker."
 LABEL "org.opencontainers.image.source"="https://github.com/FIWARE/tutorials.Custom-IoT-Agent"
 LABEL "org.nodejs.version"="${NODE_VERSION}"
 
