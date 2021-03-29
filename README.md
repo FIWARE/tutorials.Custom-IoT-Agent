@@ -4,8 +4,7 @@
 [![FIWARE IoT Agents](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/iot-agents.svg)](https://github.com/FIWARE/catalogue/blob/master/iot-agents/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Iot-Agent.svg)](https://opensource.org/licenses/MIT)
 [![Support badge](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/fiware.svg)](https://stackoverflow.com/questions/tagged/fiware)
-<br/>
-[![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
+<br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 This tutorial a wires up the dummy IoT devices which are responding using a custom [XML](https://www.w3.org/TR/xml11/)
 message format. A **custom IoT Agent** is created based on the IoT Agent Node.js
@@ -47,7 +46,7 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 
 > "And the whole earth was of one language, and of one speech."
 >
->— Genesis 11:1
+> — Genesis 11:1
 
 As defined previously, an IoT Agent is a component that lets a group of devices send their data to and be managed from a
 Context Broker using their own native protocols. Every IoT Agent is defined for a single payload format, although they
@@ -434,7 +433,7 @@ This means that attributes from the XML request can be accessed using the square
 
 ```javascript
 function checkMandatoryParams(queryPayload) {
-    return function(req, res, next) {
+    return function (req, res, next) {
         var notFoundParams = [],
             error;
 
@@ -734,7 +733,7 @@ function createCommandPayload(device, command, attributes) {
     if (typeof attributes === "object") {
         let payload = "<" + command + '  device="' + device.id + '">';
 
-        Object.keys(attributes).forEach(function(key, value) {
+        Object.keys(attributes).forEach(function (key, value) {
             payload = payload + "<" + key + ">" + value + "</" + key + ">";
         });
         payload = payload + "</" + command + ">";
