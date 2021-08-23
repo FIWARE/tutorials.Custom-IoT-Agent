@@ -302,7 +302,7 @@ docker-compose -v
 docker version
 ```
 
-Docker version 18.03 以降と Docker Compose 1.21 以降を使用していることを確認し、
+Docker version 20.10 以降と Docker Compose 1.29 以降を使用していることを確認し、
 必要に応じてアップグレードしてください。
 
 <a name="cygwin"/>
