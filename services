@@ -22,7 +22,7 @@ loadData () {
 
 stoppingContainers () {
 	echo "Stopping running containers"
-	docker compose -p fiware down -v --remove-orphans
+	docker-compose down -v --remove-orphans
 }
 
 displayServices () {
@@ -95,7 +95,7 @@ case "${command}" in
 		echo -e "- \033[1;36mIoT-Agent\033[0m is a custom IoT Agent configured for the XML Protocol"
 		echo -e "- \033[1mTutorial\033[0m acts as a series of dummy IoT Sensors over HTTP"
 		echo ""
-		docker compose -p fiware up -d --remove-orphans
+		docker-compose up -d --remove-orphans
 		waitForMongo
 		addDatabaseIndex
 		waitForOrion
@@ -111,7 +111,7 @@ case "${command}" in
 		export $(cat .env | grep "#" -v)
 		echo "Pulling Docker images"
 		docker pull curlimages/curl
-		docker compose -p fiware pull
+		docker-compose pull
 		cd iot-agent
 		docker build -t fiware/iotagent-xml --no-cache .
 		cd ..
