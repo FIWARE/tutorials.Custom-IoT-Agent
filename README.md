@@ -67,8 +67,7 @@ XML format. A direct comparison of the two IoT Agents can be seen below:
 
 | IoT Agent for Ultralight                                            | New IoT Agent for XML                                                                 | Protocol's Area of Concern |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------------- |
-| Sample Measure `c\|1`                                               | Sample Measure `<measure device="lamp002" key="xxx">`<br/>&nbsp;`<c value="1"/>`<br/> |
-| `</measure>`                                                        | Message Payload                                                                       |
+| Sample Measure `c\|1`                                               | Sample Measure `<measure device="lamp002" key="xxx">`<br/>&nbsp;`<c value="1"/>`<br/>`</measure>`                                                        | Message Payload                                                                       |
 | Sample Command `Robot1@turn\|left=30`                               | Sample Command `<turn device="Robot1">`<br/>&nbsp;`<left>30</left>`<br/>`</turn>`     | Message Payload            |
 | Content Type is `text/plain`                                        | Content Type is `application/xml`                                                     | Message Payload            |
 | Offers 3 transports - HTTP, MQTT and AMPQ                           | Offers 3 transports - HTTP, MQTT and AMPQ                                             | Transport Mechanism        |
