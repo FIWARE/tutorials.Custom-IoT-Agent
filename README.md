@@ -65,7 +65,7 @@ question.
 For the purpose of this tutorial we will amend code from the existing Ultralight IoT Agent to process a similar custom
 XML format. A direct comparison of the two IoT Agents can be seen below:
 
-| IoT Agent for Ultralight                                            | IoT Agent for JSON                                                                    | Protocol's Area of Concern |
+| IoT Agent for Ultralight                                            | New IoT Agent for XML                                                                 | Protocol's Area of Concern |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------------- |
 | Sample Measure `c\|1`                                               | Sample Measure `<measure device="lamp002" key="xxx">`<br/>&nbsp;`<c value="1"/>`<br/> |
 | `</measure>`                                                        | Message Payload                                                                       |
