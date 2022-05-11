@@ -1,11 +1,10 @@
-[![FIWARE Banner](https://fiware.github.io/tutorials.IoT-Agent/img/fiware.png)](https://www.fiware.org/developers)
+[![FIWARE Banner](https://fiware.github.io/tutorials.IoT-over-MQTT/img/fiware.png)](https://www.fiware.org/developers)
 [![NGSI v2](https://img.shields.io/badge/NGSI-v2-5dc0cf.svg)](https://fiware-ges.github.io/orion/api/v2/stable/)
 
 [![FIWARE IoT Agents](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/iot-agents.svg)](https://github.com/FIWARE/catalogue/blob/master/iot-agents/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Iot-Agent.svg)](https://opensource.org/licenses/MIT)
-[![Support badge](https://img.shields.io/badge/tag-fiware-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware)
-![XML](https://img.shields.io/badge/Payload-XML-e8ce27.svg)<br/>
-[![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
+[![Support badge](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/fiware.svg)](https://stackoverflow.com/questions/tagged/fiware)
+<br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 このチュートリアルでは、カスタム [XML](https://www.w3.org/TR/xml11/) メッセージ形式を使用して応答する ダミー IoT
 デバイスを接続します。**Custom IoT Agent** は、[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/)
@@ -48,7 +47,7 @@
 
 > "And the whole earth was of one language, and of one speech."
 >
->— Genesis 11:1
+> — Genesis 11:1
 
 以前に定義したように、IoT Agent は、デバイスのグループが独自のネイティブ・プロトコルを使用して Context Broker に
 データを送信し、Context Broker から管理できるようにするコンポーネントです。すべての IoT Agent は単一のペイロード形式に
@@ -94,7 +93,7 @@
 このチュートリアルの目的は、独自のカスタム IoT Agent を作成する方法について開発者の理解を深めることです。一連の簡単な
 変更が Ultralight IoT Agent のコードに加えられ、変更方法が示されています。このチュートリアルは、関連するコードの
 ウォークスルーと、新しい IoT Agent に接続するための一連の HTTP リクエストで構成されています。コードは、現在、
-[GitHub リポジトリ](https://github.com/FIWARE/tutorials.Custom-IoT-Agent/tree/master/iot-agent) にあります。
+[GitHub リポジトリ](https://github.com/FIWARE/tutorials.Custom-IoT-Agent/tree/NGSI-v2/iot-agent) にあります。
 
 <a name="reusing-common-functionality"/>
 
@@ -206,9 +205,9 @@ YAML ファイルに記述されている他の `tutorial` コンテナ設定値
 ## カスタム XML IoT Agent の構成
 
 カスタム XML IoT Agent のコードは、このチュートリアルに関連付けられている
-[GitHub リポジトリ](https://github.com/FIWARE/tutorials.Custom-IoT-Agent/tree/master/iot-agent)にあります。これは、
+[GitHub リポジトリ](https://github.com/FIWARE/tutorials.Custom-IoT-Agent/tree/NGSI-v2/iot-agent)にあります。これは、
 IoT Agent for Ultralight の 1.12.0 バージョンのコピーであり、以下に説明するように少し変更されています。関連する
-[Dockerfile](https://github.com/FIWARE/tutorials.Custom-IoT-Agent/blob/master/iot-agent/Dockerfile) は、Node.js
+[Dockerfile](https://github.com/FIWARE/tutorials.Custom-IoT-Agent/blob/NGSI-v2/iot-agent/Dockerfile) は、Node.js
 を実行している Docker コンテナ内の適切な場所にコードをコピーするだけです。これにより、`docker-compose.yaml`
 ファイルを使用してコンポーネントをインスタンス化できます。必要な設定は次のとおりです:
 
@@ -290,7 +289,7 @@ iot-agent:
 -   Linux に Docker をインストールするには、[こちら](https://docs.docker.com/install/)の指示に従ってください
 
 **Docker Compose** は、マルチ・コンテナの Docker アプリケーションを定義して実行するためのツールです。
-[YAMLファイル](https://raw.githubusercontent.com/Fiware/tutorials.Entity-Relationships/master/docker-compose.yml)
+[YAMLファイル](https://raw.githubusercontent.com/FIWARE/tutorials.Custom-IoT-Agent/NGSI-v2/docker-compose.yml)
 を使用して、アプリケーションに必要なサービスを構成します。つまり、すべてのコンテナ・サービスを1つのコマンドで
 起動できます。Docker Compose は、デフォルトで Docker for Windows および Docker for Mac の一部としてインストール
 されますが、Linux ユーザは[こちら](https://docs.docker.com/compose/install/) にある指示に従う必要があります。
@@ -432,8 +431,6 @@ http://iot-agent:7896/iot/xml
 
 この構文は、デバイス ID と API キーが URL パラメータとして送信される Ultralight IoT Agent とは異なります。
 
-<h3>Reading XML - Analysing the Code</h3>
-
 関連する変更は、XML パーサーがインスタンス化される `HTTPBindings.js` ファイルにあります。
 
 ```javascript
@@ -454,7 +451,7 @@ httpBindingServer.router.post(
 
 ```javascript
 function checkMandatoryParams(queryPayload) {
-    return function(req, res, next) {
+    return function (req, res, next) {
         var notFoundParams = [],
             error;
 
@@ -555,8 +552,6 @@ curl -L -X POST 'http://localhost:7896/iot/xml' \
     <c value="3"/>
 </measure>'
 ```
-
-<h3>測定値の読み取り - コードの分析</h3>
 
 ペイロードと `Content-Type` の両方が更新されました。ダミー IoT デバイスは、ドアがロックされていないときに、
 以前のチュートリアルで同様の Ultralight リクエストを行いました。各 Motion sensor の状態が変化し、
@@ -721,8 +716,6 @@ curl -iX POST \
 
 ベルを鳴らすコマンドの結果は、Orion Context Broker 内のエンティティをクエリすることで読み取ることができます。
 
-<h3>コマンドの読み取り - コードの分析</h3>
-
 Custom IoT Agent 内で、`start()` 関数は、リクエストが Context Broker から到着したときに起動する一連のハンドラ関数を
 設定します。
 
@@ -760,7 +753,7 @@ function createCommandPayload(device, command, attributes) {
     if (typeof attributes === "object") {
         let payload = "<" + command + '  device="' + device.id + '">';
 
-        Object.keys(attributes).forEach(function(key, value) {
+        Object.keys(attributes).forEach(function (key, value) {
             payload = payload + "<" + key + ">" + value + "</" + key + ">";
         });
         payload = payload + "</" + command + ">";
@@ -832,10 +825,10 @@ Custom IoT Agent を開発すると、ユーザは標準の NGSI リクエスト
 高度な機能を追加することで、アプリケーションに複雑さを加える方法を知りたいですか
 ？このシリーズ
 の[他のチュートリアル](https://www.letsfiware.jp/fiware-tutorials)を読むことで見
-つけることができます :
+つけることができます
 
 ---
 
 ## License
 
-[MIT](LICENSE) © 2020 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2020-2022 FIWARE Foundation e.V.
