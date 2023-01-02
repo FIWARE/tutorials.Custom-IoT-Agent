@@ -66,18 +66,18 @@ question.
 For the purpose of this tutorial we will amend code from the existing Ultralight IoT Agent to process a similar custom
 XML format. A direct comparison of the two IoT Agents can be seen below:
 
-| IoT Agent for Ultralight                                            | New IoT Agent for XML                                                                 | Protocol's Area of Concern |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------------- |
-| Sample Measure `c\|1`                                               | Sample Measure `<measure device="lamp002" key="xxx">`<br/>&nbsp;`<c value="1"/>`<br/>`</measure>`                                                        | Message Payload                                                                       |
-| Sample Command `Robot1@turn\|left=30`                               | Sample Command `<turn device="Robot1">`<br/>&nbsp;`<left>30</left>`<br/>`</turn>`     | Message Payload            |
-| Content Type is `text/plain`                                        | Content Type is `application/xml`                                                     | Message Payload            |
-| Offers 3 transports - HTTP, MQTT and AMPQ                           | Offers 3 transports - HTTP, MQTT and AMPQ                                             | Transport Mechanism        |
-| HTTP listens for measures on `iot/d` by default                     | HTTP listens for measures on `iot/xml` by default                                     | Transport Mechanism        |
-| HTTP devices are identified by parameters `?i=XXX&k=YYY`            | HTTP devices are identified by payload `<measure device="XXX" key="YYY">`             | Device Identification      |
-| HTTP commands posted to a well-known URL - response is in the reply | HTTP commands posted to a well-known URL - response is in the reply                   | Communications Handshake   |
-| MQTT devices are identified by the path of the topic `/XXX/YYY`     | MQTT devices are identified by the path of the topic `/XXX/YYY`                       | Device Identification      |
-| MQTT commands posted to the `cmd` topic                             | MQTT commands posted to the `cmd` topic                                               | Communications Handshake   |
-| MQTT command responses posted to the `cmdexe` topic                 | MQTT commands posted to the `cmdexe` topic                                            | Communications Handshake   |
+| IoT Agent for Ultralight                                            | New IoT Agent for XML                                                                             | Protocol's Area of Concern |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------- |
+| Sample Measure `c\|1`                                               | Sample Measure `<measure device="lamp002" key="xxx">`<br/>&nbsp;`<c value="1"/>`<br/>`</measure>` | Message Payload            |
+| Sample Command `Robot1@turn\|left=30`                               | Sample Command `<turn device="Robot1">`<br/>&nbsp;`<left>30</left>`<br/>`</turn>`                 | Message Payload            |
+| Content Type is `text/plain`                                        | Content Type is `application/xml`                                                                 | Message Payload            |
+| Offers 3 transports - HTTP, MQTT and AMPQ                           | Offers 3 transports - HTTP, MQTT and AMPQ                                                         | Transport Mechanism        |
+| HTTP listens for measures on `iot/d` by default                     | HTTP listens for measures on `iot/xml` by default                                                 | Transport Mechanism        |
+| HTTP devices are identified by parameters `?i=XXX&k=YYY`            | HTTP devices are identified by payload `<measure device="XXX" key="YYY">`                         | Device Identification      |
+| HTTP commands posted to a well-known URL - response is in the reply | HTTP commands posted to a well-known URL - response is in the reply                               | Communications Handshake   |
+| MQTT devices are identified by the path of the topic `/XXX/YYY`     | MQTT devices are identified by the path of the topic `/XXX/YYY`                                   | Device Identification      |
+| MQTT commands posted to the `cmd` topic                             | MQTT commands posted to the `cmd` topic                                                           | Communications Handshake   |
+| MQTT command responses posted to the `cmdexe` topic                 | MQTT commands posted to the `cmdexe` topic                                                        | Communications Handshake   |
 
 As can be seen, the supported communications transports (HTTP, MQTT, AMPQ) remain the same, it is processing of the
 custom payload which will need to be adapted to ensure that the XML devices can communicate with the IoT Agent.
