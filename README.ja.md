@@ -158,7 +158,7 @@ services セクションで確認できます。
 
 ```yaml
 tutorial:
-    image: fiware/tutorials.context-provider
+    image: quay.io/fiware/tutorials.context-provider
     hostname: iot-sensors
     container_name: fiware-tutorial
     networks:
@@ -214,7 +214,7 @@ IoT Agent for Ultralight の 1.12.0 バージョンのコピーであり、以�
 
 ```yaml
 iot-agent:
-    image: fiware/iotagent-xml
+    image: quay.io/fiware/iotagent-xml
     build:
         context: iot-agent
         dockerfile: Dockerfile
@@ -493,7 +493,7 @@ function checkMandatoryParams(queryPayload) {
 ### センサのプロビジョニング
 
 エンティティを作成するときは、NGSI-LD
-[仕様](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.04.01_60/gs_cim009v010401p.pdf)
+[仕様](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.06.01_60/gs_CIM009v010601p.pdf)
 に従って URN を使用するのが一般的です。さらに、データ属性を定義するときに、意味のある名前を理解しやすくなります。
 これらのマッピングは、デバイスを個別にプロビジョニングすることで定義できます。
 

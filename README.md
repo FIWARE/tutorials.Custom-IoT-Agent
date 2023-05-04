@@ -155,7 +155,7 @@ section of the associated `docker-compose.yml` file:
 
 ```yaml
 tutorial:
-    image: fiware/tutorials.context-provider
+    image: quay.io/fiware/tutorials.context-provider
     hostname: iot-sensors
     container_name: fiware-tutorial
     networks:
@@ -209,7 +209,7 @@ instansiated using a `docker-compose.yaml` file. The necessary configuration can
 
 ```yaml
 iot-agent:
-    image: fiware/iotagent-xml
+    image: quay.io/fiware/iotagent-xml
     build:
         context: iot-agent
         dockerfile: Dockerfile

@@ -22,7 +22,7 @@ services:
   orion:
     labels:
       org.fiware: 'tutorial'
-    image: fiware/orion:${ORION_VERSION}
+    image: quay.io/fiware/orion:${ORION_VERSION}
     hostname: orion
     container_name: fiware-orion
     depends_on:
@@ -40,7 +40,7 @@ services:
 
   # IoT-Agent is configured for the Custom XML Protocol
   iot-agent:
-    image: fiware/iotagent-xml
+    image: quay.io/fiware/iotagent-xml
     build:
       context: iot-agent
       dockerfile: Dockerfile
@@ -79,7 +79,7 @@ services:
   tutorial:
     labels:
       org.fiware: 'tutorial'
-    image: fiware/tutorials.context-provider
+    image: quay.io/fiware/tutorials.context-provider
     hostname: iot-sensors
     container_name: fiware-tutorial
     depends_on:
