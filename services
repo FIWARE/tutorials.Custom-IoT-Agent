@@ -139,10 +139,9 @@ case "${command}" in
 		export $(cat .env | grep "#" -v)
 		echo "Pulling Docker images"
 		docker pull quay.io/curl/curl
-		${dockerCmd} create 
-		# cd iot-agent
-		# docker build -t fiware/iotagent-xml --no-cache .
-		# cd ..
+		${dockerCmd} pull --ignore-buildable
+		echo "Rebuilding iot-agent Docker image"
+		${dockerCmd} build iot-agent --no-cache
 		;;
 	*)
 		echo "Command not Found."
