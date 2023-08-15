@@ -138,7 +138,7 @@ case "${command}" in
 	"create")
 		export $(cat .env | grep "#" -v)
 		echo "Pulling Docker images"
-		docker pull quay.io/curl/curl
+		docker pull -q quay.io/curl/curl
 		${dockerCmd} pull --ignore-buildable
 		echo "Rebuilding iot-agent Docker image"
 		${dockerCmd} build iot-agent --no-cache
