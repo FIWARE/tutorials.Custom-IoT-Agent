@@ -361,7 +361,7 @@ git checkout NGSI-v2
 
 公開されたポートに HTTP リクエストを送信することで、IoT Agent が実行されているかどうかを確認できます:
 
-#### :one: リクエスト:
+#### 1️⃣ リクエスト:
 
 ```console
 curl -X GET \
@@ -394,7 +394,7 @@ curl -X GET \
 この例では、デバイスの匿名グループをプロビジョニングします。一連のデバイスがメッセージを `IOTA_HTTP_PORT`
 に送信することを IoT Agent に通知します (ここで、IoT Agent は **Northbound** 通信をリッスンします)
 
-#### :two: リクエスト:
+#### 2️⃣ リクエスト:
 
 ```console
 curl -iX POST \
@@ -507,7 +507,7 @@ function checkMandatoryParams(queryPayload) {
 > **注**: 個々の `id` が必要ない場合、または集約されたデータで十分な場合、`attributes`
 > は個別ではなくプロビジョニング・サービス内で定義できます。
 
-#### :three: リクエスト:
+#### 3️⃣ リクエスト:
 
 ```console
 curl -iX POST \
@@ -544,7 +544,7 @@ HTTP コマンドは、基になるペイロードまたはトランスポート
 次の XML リクエストを行うことで、**Motion Sensor** デバイス `motion001` からのダミー IoT デバイスの測定を
 シミュレートできます。
 
-#### :four: リクエスト:
+#### 4️⃣ リクエスト:
 
 ```console
 curl -L -X POST 'http://localhost:7896/iot/xml' \
@@ -586,7 +586,7 @@ function parse(payload) {
 Context Broker からエンティティ・データを取得すると、測定値が記録されていることがわかります。`fiware-service` および
 `fiware-service-path` ヘッダを追加することを忘れないでください。
 
-#### :five: リクエスト:
+#### 5️⃣ リクエスト:
 
 ```console
 curl -X GET \
@@ -642,7 +642,7 @@ XML コマンドを送信する必要がある場所を保持し、`commands` �
 `http://iot-sensors:3001/iot/bell001` で、`ring` コマンドを受け入れることができます。`transport=HTTP`
 属性は、使用する通信プロトコルを定義します。
 
-#### :six: リクエスト:
+#### 6️⃣ リクエスト:
 
 ```console
 curl -iX POST \
@@ -688,7 +688,7 @@ Context Broker を接続する前に、`/v2/op/update` エンドポイントを�
 Context Broker によって呼び出されるのは、このエンドポイントです。
 構成をテストするには、次のようにコマンドを直接実行します:
 
-#### :seven: リクエスト:
+#### 7️⃣  リクエスト:
 
 ```console
 curl -iX POST \
@@ -793,7 +793,7 @@ IoT Agents の典型であるように、ペイロードの作成と通信のハ
 
 アクチュエータ・コマンドの結果は、標準の NGSI コマンドを使用して Context Broker で読み取ることができます。
 
-#### :eight: リクエスト:
+#### 8️⃣  リクエスト:
 
 ```console
 curl -X GET \

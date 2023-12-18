@@ -343,7 +343,7 @@ The device monitor can be found at: `http://localhost:3000/device/monitor`
 
 You can check if the IoT Agent is running by making an HTTP request to the exposed port:
 
-#### :one: Request:
+#### 1️⃣ Request:
 
 ```console
 curl -X GET \
@@ -375,7 +375,7 @@ within this tutorial as we will be provisioning each device separately.
 This example provisions an anonymous group of devices. It tells the IoT Agent that a series of devices will be sending
 messages to the `IOTA_HTTP_PORT` (where the IoT Agent is listening for **Northbound** communications)
 
-#### :two: Request:
+#### 2️⃣ Request:
 
 ```console
 curl -iX POST \
@@ -486,7 +486,7 @@ Three types of measurement attributes can be provisioned:
 > **Note**: in the case where individual `id`s are not required, or aggregated data is sufficient the `attributes` can
 > be defined within the provisioning service rather than individually.
 
-#### :three: Request:
+#### 3️⃣ Request:
 
 ```console
 curl -iX POST \
@@ -523,7 +523,7 @@ device `motion001` with the URN `urn:ngsi-ld:Motion:001` and mapping the device 
 You can simulate a dummy IoT device measurement coming from the **Motion Sensor** device `motion001`, by making the
 following XML request
 
-#### :four: Request:
+#### 4️⃣ Request:
 
 ```console
 curl -L -X POST 'http://localhost:7896/iot/xml' \
@@ -565,7 +565,7 @@ entity attribute names (like `count`) - obviously the mapping is based on the va
 You can see that a measurement has been recorded, by retrieving the entity data from the context broker. Don't forget to
 add the `fiware-service` and `fiware-service-path` headers.
 
-#### :five: Request:
+#### 5️⃣ Request:
 
 ```console
 curl -X GET \
@@ -621,7 +621,7 @@ invoked. The example below provisions a bell with the `deviceId=bell001`. The en
 `http://iot-sensors:3001/iot/bell001` and it can accept the `ring` command. The `transport=HTTP` attribute defines the
 communications protocol to be used.
 
-#### :six: Request:
+#### 6️⃣ Request:
 
 ```console
 curl -iX POST \
@@ -667,7 +667,7 @@ directly to the IoT Agent's North Port using the `/v2/op/update` endpoint. It is
 invoked by the context broker once we have connected it up. To test the configuration you can run the command directly
 as shown:
 
-#### :seven: Request:
+#### 7️⃣  Request:
 
 ```console
 curl -iX POST \
@@ -773,7 +773,7 @@ side of the code that needs modification to fulfil our custom use case.
 
 The result of the actutator command can be read in the context broker using standard NGSI commands.
 
-#### :eight: Request:
+#### 8️⃣  Request:
 
 ```console
 curl -X GET \
