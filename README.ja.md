@@ -493,7 +493,7 @@ function checkMandatoryParams(queryPayload) {
 ### センサのプロビジョニング
 
 エンティティを作成するときは、NGSI-LD
-[仕様](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.07.01_60/gs_cim009v010701p.pdf)
+[仕様](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.08.01_60/gs_cim009v010801p.pdf)
 に従って URN を使用するのが一般的です。さらに、データ属性を定義するときに、意味のある名前を理解しやすくなります。
 これらのマッピングは、デバイスを個別にプロビジョニングすることで定義できます。
 
