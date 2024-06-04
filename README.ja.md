@@ -32,7 +32,7 @@
     -   [カスタム XML IoT Agent の構成](#custom-xml-iot-agent-configuration)
 -   [前提条件](#prerequisites)
     -   [Docker](#docker)
-    -   [Cygwin](#cygwin)
+    -   [WSL](#wsl)
 -   [起動](#start-up)
 -   [カスタム IoT Agent の作成](#creating-a-custom-iot-agent)
     -   [IoT Agent サービス の健全性の確認](#checking-the-iot-agent-service-health)
@@ -305,11 +305,9 @@ docker version
 Docker version 20.10 以降と Docker Compose 1.29 以降を使用していることを確認し、
 必要に応じてアップグレードしてください。
 
-<a name="cygwin"/>
+## WSL
 
-## Cygwin
-
-簡単な bash スクリプトを使用してサービスを起動します。Windows ユーザは、[cygwin](http://www.cygwin.com/) を
+簡単な bash スクリプトを使用してサービスを起動します。Windows ユーザは、[を使用して Windows に Linux をインストールする方法](https://learn.microsoft.com/ja-jp/windows/wsl/install) を
 ダウンロードして、Windows 上の Linux ディストリビューションと同様のコマンドライン機能を提供する必要があります。
 
 <a name="start-up"/>
