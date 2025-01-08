@@ -830,4 +830,4 @@ Custom IoT Agent を開発すると、ユーザは標準の NGSI リクエスト
 
 ## License
 
-[MIT](LICENSE) © 2020-2024 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2020-2025 FIWARE Foundation e.V.
