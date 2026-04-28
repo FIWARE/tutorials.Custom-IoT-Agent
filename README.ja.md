@@ -10,7 +10,7 @@
 デバイスを接続します。**Custom IoT Agent** は、[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/)
 に送信された [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) リクエストを使用して測定値を読み取り、
 コマンドを送信できるように、IoT Agent Node.js [ライブラリ](https://iotagent-node-lib.readthedocs.io/en/latest/) と
-[IoT Agent for Ultralight](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+[IoT Agent for JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
 デバイスにあるフレームワークに基づいて作成されます。
 
 チュートリアルでは、全体を通して [cUrl](https://ec.haxx.se/) コマンドを使用していますが、
@@ -62,10 +62,10 @@
 独自の IoT Agent を作成するプロセスは比較的簡単です。これは、必要なデータ転送を使用する IoT Agent を選択し、
 ペイロード処理コードを書き換え/修正して、問題のペイロードを処理することにより、最もよく達成されます。
 
-このチュートリアルでは、既存の Ultralight IoT Agent のコードを修正して、同様のカスタム XML 形式を処理します。
+このチュートリアルでは、既存の JSON IoT Agent のコードを修正して、同様のカスタム XML 形式を処理します。
 2つの IoT Agent の直接比較を以下に示します:
 
-| IoT Agent for Ultralight                                             | IoT Agent for XML                                                                                   | プロトコルの関心領域       |
+| IoT Agent for JSON                                             | IoT Agent for XML                                                                                   | プロトコルの関心領域       |
 | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | -------------------------- |
 | 測定値のサンプル `c\|1`                                              | 測定値のサンプル `<measure device="lamp002" key="xxx">`<br/>&nbsp;`<c value="1"/>`<br/>`</measure>` | メッセージ・ペイロード     |
 | コマンドのサンプル `Robot1@turn\|left=30`                            | コマンドのサンプル `<turn device="Robot1">`<br/>&nbsp;`<left>30</left>`<br/>`</turn>`               | メッセージ・ペイロード     |
@@ -92,7 +92,7 @@
 ## このチュートリアルの目標
 
 このチュートリアルの目的は、独自のカスタム IoT Agent を作成する方法について開発者の理解を深めることです。一連の簡単な
-変更が Ultralight IoT Agent のコードに加えられ、変更方法が示されています。このチュートリアルは、関連するコードの
+変更が JSON IoT Agent のコードに加えられ、変更方法が示されています。このチュートリアルは、関連するコードの
 ウォークスルーと、新しい IoT Agent に接続するための一連の HTTP リクエストで構成されています。コードは、現在、
 [GitHub リポジトリ](https://github.com/FIWARE/tutorials.Custom-IoT-Agent/tree/NGSI-v2/iot-agent) にあります。
 
@@ -207,7 +207,7 @@ YAML ファイルに記述されている他の `tutorial` コンテナ設定値
 
 カスタム XML IoT Agent のコードは、このチュートリアルに関連付けられている
 [GitHub リポジトリ](https://github.com/FIWARE/tutorials.Custom-IoT-Agent/tree/NGSI-v2/iot-agent)にあります。これは、
-IoT Agent for Ultralight の 1.12.0 バージョンのコピーであり、以下に説明するように少し変更されています。関連する
+IoT Agent for JSON の 1.12.0 バージョンのコピーであり、以下に説明するように少し変更されています。関連する
 [Dockerfile](https://github.com/FIWARE/tutorials.Custom-IoT-Agent/blob/NGSI-v2/iot-agent/Dockerfile) は、Node.js
 を実行している Docker コンテナ内の適切な場所にコードをコピーするだけです。これにより、`docker-compose.yaml`
 ファイルを使用してコンポーネントをインスタンス化できます。必要な設定は次のとおりです:
@@ -428,7 +428,7 @@ http://iot-agent:7896/iot/xml
 </measure>
 ```
 
-この構文は、デバイス ID と API キーが URL パラメータとして送信される Ultralight IoT Agent とは異なります。
+この構文は、デバイス ID と API キーが URL パラメータとして送信される JSON IoT Agent とは異なります。
 
 関連する変更は、XML パーサーがインスタンス化される `HTTPBindings.js` ファイルにあります。
 
@@ -532,7 +532,7 @@ curl -iX POST \
 '
 ```
 
-予想通り、元の Ultralight IoT Agent と同じ HTTP トランスポートを使用しているため、**デバイスをプロビジョニングする**
+予想通り、元の JSON IoT Agent と同じ HTTP トランスポートを使用しているため、**デバイスをプロビジョニングする**
 HTTP コマンドは、基になるペイロードまたはトランスポート・プロトコルに基づいて変更されません。`internal_atttributes`
 を使用して、必要に応じて Custom IoT Agent の追加情報を提供できます。リクエストでは、デバイス `motion001` を URN
 `urn:ngsi-ld:Motion:001` に関連付け、デバイスの `c` をコンテキスト属性 `count` (`Integer` として定義されている)
@@ -553,7 +553,7 @@ curl -L -X POST 'http://localhost:7896/iot/xml' \
 ```
 
 ペイロードと `Content-Type` の両方が更新されました。ダミー IoT デバイスは、ドアがロックされていないときに、
-以前のチュートリアルで同様の Ultralight リクエストを行いました。各 Motion sensor の状態が変化し、
+以前のチュートリアルで同様の JSON リクエストを行いました。各 Motion sensor の状態が変化し、
 ノースバウンド・リクエストがデバイス・モニタに記録されます。
 
 これで IoT Agent が接続され、サービス・グループは IoT Agent がリッスンするリソース (`iot/xml`) を定義し、
@@ -673,7 +673,7 @@ curl -iX POST \
 
 1.  Custom IoT Agent が属性を登録します
 2.  Custom IoT Agent が `/v2/op/update` エンドポイントで、コンテキストを更新するための各リクエストをします
-3. リクエストの処理方法が決定されます。Custom IoT Agent と Ultralight Agent の両方で、これは `<command>State`
+3. リクエストの処理方法が決定されます。Custom IoT Agent と JSON Agent の両方で、これは `<command>State`
    属性を設定し、`/cmd` エンドポイントでリクエストを修正して、デバイス (またはデバイスの責任を負うミドルウェア)
    にフォワーディングするというパラダイムに従います
 
@@ -763,7 +763,7 @@ function createCommandPayload(device, command, attributes) {
 }
 ```
 
-これは Ultralight プロトコルの修正であり、 `@` および `|` 記号が Ultralight デバイス用に生成されます。
+これは JSON プロトコルの修正であり、 `@` および `|` 記号が JSON デバイス用に生成されます。
 
 ただし、ペイロードの作成はジョブの半分にすぎず、デバイスに送信して理解する必要があるため、明確に定義された
 通信ハンドシェイクを使用して通信を完了する必要があります。そのため、ペイロードを生成した後、 `HTTPBindings.js`
